@@ -1,35 +1,30 @@
 > rm(list=ls())
-> wd
-Error: object 'wd' not found
-> wd()
-Error: could not find function "wd"
-> features = read.table('./feature.txt',header = FALSE);
-Error in file(file, "rt") : cannot open the connection
-In addition: Warning message:
-In file(file, "rt") :
-  cannot open file './feature.txt': No such file or directory
+#Read data from files
 > features = read.table('./features.txt',header = FALSE);
 > activityType = read.table('./activity_labels.txt',header = FALSE);
 > subjectTrain = read.table('./train/subject_train.txt',header = FALSE);
 > xTrain = read.table('./train/x_train.txt',header = FALSE);
 > yTrain = read.table('./train/y_train.txt',header = FALSE);
-> #
+>
+>#Assign column names from above
 > colnames(activityType) =c('activityId','activityType');
 > colnames(subjectTrain) = "subjectId";
 > colnames(xTrain) = features[,2];
 > colnames(yTrain) = "activityId";
 > 
+>#Merge YTrain, subjectTrain and xTrain then name it trainingData
 > trainingData = cbind(yTrain,subjectTrain,xTrain);
-> 
+> #Read the test data
 > subjectTest = read.table('./test/subject_test.txt',header=FALSE);
 > xTest = read.table('./test/x_test.txt',header=FALSE);
 > yTest = read.table('./test/y_test.txt',header=FALSE);
-> 
+> #Assign the column names from above
 > colnames(subjectTest) = "subjectId";
 > colnames(xTest) = features[,2];
 > colnames(yTest) = "activityId";
-> 
+> #final data test set
 > testData = cbind(yTest,subjectTest,xTest);
+>#Combine the training and test data
 > finalData = rbind(trainingData,testData);
 > 
 > colNames = colnames(finalData);
